@@ -5,8 +5,8 @@ class `10_ModifyFieldsWhenTheyAreOfACertainSubtype` extends TestSuite {
   case class Zoo(animals: List[Animal])
 
   sealed abstract class Animal extends Product with Serializable
-  case class Dog(age: Int) extends Animal
   case class Cat(ages: List[Int]) extends Animal
+  case class Dog(age: Int) extends Animal
 
   test("test") {
     val input: Zoo =

@@ -31,8 +31,8 @@ class `13_ModifyNestedSealedHierarchies` extends TestSuite {
   {
     import com.softwaremill.quicklens._
 
-    assert(input, expected) { person =>
-      person
+    assert(input, expected) { pet =>
+      pet
         .modify(_.each.name)
         .using(_ + ", Jr.")
     }
@@ -47,7 +47,7 @@ class `13_ModifyNestedSealedHierarchies` extends TestSuite {
     import monocle.macros._
     import monocle.macros.syntax.lens._
 
-    assert(input, expected) { person =>
+    assert(input, expected) { pet =>
       Traversal
         .fromTraverse[List, Pet]
         .composeLens(
@@ -59,10 +59,10 @@ class `13_ModifyNestedSealedHierarchies` extends TestSuite {
             }
           }
         )
-        .modify(_ + ", Jr.")(person)
+        .modify(_ + ", Jr.")(pet)
     }
 
-    assert(input, expected) { person =>
+    assert(input, expected) { pet =>
       val traversal: Traversal[List[Pet], Pet] =
         Traversal.fromTraverse
 
@@ -76,7 +76,7 @@ class `13_ModifyNestedSealedHierarchies` extends TestSuite {
         traversal
           .composePrism(GenPrism[Pet, Fish])
           .composeLens(GenLens[Fish](_.name))
-      ).map(_.modify(_ + ", Jr.")).reduceLeft(_ andThen _)(person)
+      ).map(_.modify(_ + ", Jr.")).reduceLeft(_ andThen _)(pet)
     }
   }
 }

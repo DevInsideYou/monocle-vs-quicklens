@@ -129,22 +129,22 @@ class `01_ModifyDeeplyNestedFieldsInCaseClasses` extends TestSuite {
             .set("3 OO Ln.")
         }
 
+        import monocle.macros._
+
         assert(input, expectedModified) { person =>
           val lens =
-            person
-              .lens(_.address.street.name)
+            GenLens[Person](_.address.street.name)
 
           lens
-            .modify(_.toUpperCase)
+            .modify(_.toUpperCase)(person)
         }
 
         assert(input, expectedSet) { person =>
           val lens =
-            person
-              .lens(_.address.street.name)
+            GenLens[Person](_.address.street.name)
 
           lens
-            .set("3 OO Ln.")
+            .set("3 OO Ln.")(person)
         }
 
         import monocle.macros._

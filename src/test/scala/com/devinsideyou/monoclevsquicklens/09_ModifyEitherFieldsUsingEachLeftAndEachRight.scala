@@ -18,9 +18,11 @@ class `09_ModifyEitherFieldsUsingEachLeftAndEachRight` extends TestSuite {
     {
       import com.softwaremill.quicklens._
 
-      devResource
-        .modify(_.auth.eachLeft.token)
-        .setTo("real") shouldBe realResource
+      assert(devResource, realResource) { resource =>
+        resource
+          .modify(_.auth.eachLeft.token)
+          .setTo("real")
+      }
     }
 
     // Monocle
@@ -30,11 +32,13 @@ class `09_ModifyEitherFieldsUsingEachLeftAndEachRight` extends TestSuite {
       import monocle.macros.syntax.lens._
       import monocle.std._
 
-      devResource
-        .lens(_.auth)
-        .composePrism(either.stdLeft)
-        .composeLens(GenLens[AuthContext](_.token))
-        .set("real") shouldBe realResource
+      assert(devResource, realResource) { resource =>
+        resource
+          .lens(_.auth)
+          .composePrism(either.stdLeft)
+          .composeLens(GenLens[AuthContext](_.token))
+          .set("real")
+      }
     }
   }
 }
