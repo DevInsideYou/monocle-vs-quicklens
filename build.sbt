@@ -30,8 +30,8 @@ lazy val `monocle-vs-quicklens` =
         "-feature",
         "-language:_",
         "-unchecked",
-        // "-Wunused:_",
-        // "-Xfatal-warnings",
+        "-Wunused:_",
+        "-Xfatal-warnings",
         "-Ymacro-annotations"
       ),
       Compile / console / scalacOptions --= Seq(
